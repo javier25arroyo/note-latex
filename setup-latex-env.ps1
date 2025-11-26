@@ -242,6 +242,8 @@ function Invoke-LatexBuild {
     Write-Host "Starting LaTeX build for: $Path"
 
     $outRel = "..\build"  # relative to $sourceDir
+    # Resolve absolute output directory based on global $buildDir
+    $buildOut = (Resolve-Path $buildDir).Path
 
     # Prefer latexmk if usable; otherwise fallback to pdflatex (2 passes)
     $useLatexmk = $false
@@ -263,7 +265,7 @@ function Invoke-LatexBuild {
                 "-pdf",
                 "-interaction=nonstopmode",
                 "-output-directory=$buildOut",
-                "-aux-directory=$outRel",
+                "-aux-directory=$buildOut",
                 " `"$sourceFileName`" "
             )
             $process = Start-Process "latexmk" -ArgumentList $latexmkArgs -WorkingDirectory $sourceDir -Wait -PassThru -NoNewWindow
@@ -281,8 +283,8 @@ function Invoke-LatexBuild {
         }
         
         # Move log files to the logs directory
-        Get-ChildItem -Path $buildDir -Filter "*.log" | Move-Item -Destination $logsDir -Force -ErrorAction SilentlyContinue
-        Get-ChildItem -Path $buildDir -Filter "*.aux" | Remove-Item -Force -ErrorAction SilentlyContinue
+        Get-ChildItem -Path $buildOut -Filter "*.log" | Move-Item -Destination $logsDir -Force -ErrorAction SilentlyContinue
+        Get-ChildItem -Path $buildOut -Filter "*.aux" | Remove-Item -Force -ErrorAction SilentlyContinue
 
         if ($process.ExitCode -eq 0) {
             $pdfOutput = Join-Path $buildDir ($sourceFile.BaseName + ".pdf")
