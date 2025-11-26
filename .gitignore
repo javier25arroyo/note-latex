@@ -1,0 +1,39 @@
+# Ignore LaTeX build artifacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.brf
+*.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.lot
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.nav
+*.snm
+*.vrb
+
+# PDF and other generated docs
+*.pdf
+*.dvi
+*.ps
+
+# Editor/OS files
+.DS_Store
+Thumbs.db
+~$*
+*.swp
+*.swo
+
+# Local latex environment
+latex-env/
+
+# Temporary files
+*.tmp
+*.temp
