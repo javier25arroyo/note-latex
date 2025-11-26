@@ -38,6 +38,15 @@ Este proyecto proporciona scripts de PowerShell para configurar y compilar LaTeX
 
 - Edita tu documento en `./latex-env/src/` (se crea un `main.tex` de ejemplo). La salida PDF queda en `./latex-env/build/` y los logs en `./latex-env/logs/`.
 
+- Visualizar el PDF generado:
+  Invoke-Item .\latex-env\build\main.pdf
+
+- Si cambias el nombre del archivo `.tex`, usa ese mismo nombre (con la nueva ruta) en `Invoke-LatexBuild` y el PDF se llamará igual pero con extensión `.pdf` dentro de `./latex-env/build/`. Ejemplo para `apuntes-algebra.tex`:
+  ```powershell
+  Invoke-LatexBuild -Path '.\latex-env\src\apuntes-algebra.tex'
+  Invoke-Item .\latex-env\build\apuntes-algebra.pdf
+  ```
+
 ## Verificación rápida
 1) Ejecuta:  .\build.ps1
 2) Comprueba que se generó `./latex-env/build/main.pdf` y que existen logs en `./latex-env/logs/`.
